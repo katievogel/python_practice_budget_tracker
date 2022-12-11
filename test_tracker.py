@@ -1,5 +1,6 @@
 import csv
 import os
+from functools import reduce
 from datetime import datetime
 
 import unittest
@@ -11,23 +12,23 @@ mock = MagicMock()
 
 class TestBudgetTracker(unittest.TestCase):
     
-    def test_add_tran_transaction_date(self):
+    def test_query_all_txns(self):
         '''
-        Test that transaction date is entered in the correct Month-Day-Year format
+        
         '''
-        transaction_date = '10-03-2022'
-        item_name = mock.item_name
-        item_category = mock.item_category
-        unit_cost = mock.unit_cost
-        total_units = mock.total_units
-        total_cost = mock.total_cost
+        #item_name = mock.item_name
+        txs = query_all_transactions()
+        self.assertTrue(len(txs) > 0)
+        tx = txs[0]
+        self.assertTrue(tx['transaction_date'] is not None)
+        self.assertTrue("transaction_date" in tx.keys())
+        self.assertTrue(['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'] == list(tx.keys()))
 
-        x = add_transaction(transaction_date, item_name, item_category, unit_cost, total_units, total_cost)
+
         
-        self.assertNotEqual(transaction_date, datetime.strptime('10-03-2022', "%m-%d-%Y"))
-        
-    def test_sum(self):
+    def test_computation(self):
         self.assertEqual(2, 1+1)
+        self.assertEqual(6, reduce(lambda acc, x: acc + x, [1, 2, 3]))
 
 if __name__ == '__main__':
     unittest.main()

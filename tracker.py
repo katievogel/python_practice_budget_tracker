@@ -21,16 +21,17 @@ def add_transaction(transaction_date, item_name, item_category, unit_cost, total
         }
 
 
-def view_all_transactions():
+def query_all_transactions():
     with open("./transactions.csv", "r") as file:
         reader = csv.DictReader(file)
-        for record in reader:
-            print(record['transaction_date'],
-                record['item_name'], 
-                record['item_category'], 
-                record['unit_cost'], 
-                record['total_units'], 
-                record['total_cost'])
+        return list(reader)
+
+#def query_all_txns(): pass
+#def format_txns_to_string(): pass
+#def connect_to_db(config): pass
+
+
+
 
 def view_account_balance(transaction_date, item_name, item_category, unit_cost, total_units, total_cost, file):
     with open("./transactions.csv", "r") as file:
@@ -67,7 +68,15 @@ def main():
             print(f"The total cost for {item_name} is {float(unit_cost) * float(total_units)}.")
         elif current_task == 'v':
             print("Here is a list of all of the transactions:")
-            view_all_transactions()
+            
+            for record in query_all_transactions():
+                print(record['transaction_date'],
+                    record['item_name'], 
+                    record['item_category'], 
+                    record['unit_cost'], 
+                    record['total_units'], 
+                    record['total_cost'])
+
         elif current_task == 'b':
             print("Here are the balance details:")
             view_account_balance(transaction_date, item_name, item_category, unit_cost, total_units, total_cost, file)
