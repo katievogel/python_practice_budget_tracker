@@ -21,7 +21,7 @@ def add_transaction(transaction_date, item_name, item_category, unit_cost, total
         }
 
 
-def view_all_transactions(transaction_date, item_name, item_category, unit_cost, total_units, total_cost, file):
+def view_all_transactions():
     with open("./transactions.csv", "r") as file:
         reader = csv.DictReader(file)
         for record in reader:
@@ -67,7 +67,7 @@ def main():
             print(f"The total cost for {item_name} is {float(unit_cost) * float(total_units)}.")
         elif current_task == 'v':
             print("Here is a list of all of the transactions:")
-            view_all_transactions(transaction_date, item_name, item_category, unit_cost, total_units, total_cost, file)
+            view_all_transactions()
         elif current_task == 'b':
             print("Here are the balance details:")
             view_account_balance(transaction_date, item_name, item_category, unit_cost, total_units, total_cost, file)
