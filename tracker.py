@@ -33,7 +33,7 @@ def query_all_transactions():
 
 
 
-def view_account_balance(transaction_date, item_name, item_category, unit_cost, total_units, total_cost, file):
+def view_account_balance():
     with open("./transactions.csv", "r") as file:
         reader = csv.DictReader(file)
         expenses = float(0)
@@ -79,7 +79,7 @@ def main():
 
         elif current_task == 'b':
             print("Here are the balance details:")
-            view_account_balance(transaction_date, item_name, item_category, unit_cost, total_units, total_cost, file)
+            view_account_balance()
         elif current_task not in ['q', 'a', 'b', 'v']:
             print("Invalid option.")
 
