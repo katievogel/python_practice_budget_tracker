@@ -30,10 +30,7 @@ def query_all_transactions():
 #def format_txns_to_string(): pass
 #def connect_to_db(config): pass
 
-
-
-
-def view_account_balance():
+def query_account_balance():
     with open("./transactions.csv", "r") as file:
         reader = csv.DictReader(file)
         expenses = float(0)
@@ -45,7 +42,7 @@ def view_account_balance():
             else:
                 income += float(record['total_cost'])
             profit = income - expenses
-        print("Total Expenses: " + str(expenses), "Total Income: " + str(income), "Net Balance: " + str(profit))
+        return expenses, income, profit
 
 def main():
     current_task = ""
@@ -79,7 +76,8 @@ def main():
 
         elif current_task == 'b':
             print("Here are the balance details:")
-            view_account_balance()
+            expenses, income, profit = query_account_balance()
+            print("Total Expenses: " + str(expenses), "Total Income: " + str(income), "Net Balance: " + str(profit))
         elif current_task not in ['q', 'a', 'b', 'v']:
             print("Invalid option.")
 
