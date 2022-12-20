@@ -10,6 +10,16 @@ from tracker import *
 
 mock = MagicMock()
 
+
+class TestTransactionClass(unittest.TestCase):
+    def test_computation(self):
+        txn = Transaction("2022-08-24 00:00:00", "Lemons", "expense", .50, 10, 5)
+        self.assertEqual(txn.item_name, "Lemons")
+    
+
+
+
+
 class TestBudgetTracker(unittest.TestCase):
     
     def test_query_all_txns(self):
@@ -33,7 +43,7 @@ class TestBudgetTracker(unittest.TestCase):
         self.assertTrue(income is not None)
         self.assertTrue(profit is not None)
         self.assertEqual(profit, (income - expenses))
-        
+
         # next: mocks
 
     
