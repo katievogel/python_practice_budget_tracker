@@ -55,3 +55,20 @@ def get_age_and_name():
 def get_dot_syn():
     print(people[0].age)
 
+class TransactionFileReader():
+    def __init__(self, filepath):
+        self.filepath = filepath
+        with open(filepath, 'r') as file:
+            reader = csv.DictReader(file)
+            self.records = list(reader)
+
+def read_transactions_file(filepath):
+    with open(filepath, 'r') as file:
+        reader = csv.DictReader(file)
+        return list(reader)
+
+records = TransactionFileReader('../transactions.csv').records
+records = read_transactions_file('../transactions.csv')
+
+myReader.filepath
+myReader.records
