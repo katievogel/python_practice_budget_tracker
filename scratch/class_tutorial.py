@@ -2,10 +2,10 @@ import unittest
 from unittest import TestCase
 
 class Person():
-    name = None
-    age = None
+    name: str
+    age: int
 
-    def __init__(self, name, age):   # constructor
+    def __init__(self, name: str, age: int):   # constructor
         self.name = name
         self.age = age
 
