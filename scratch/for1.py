@@ -46,11 +46,7 @@ def make_list_of_dict_from_csvfile(filepath):
         header = read_csv_headers(file)
         body_lines = file.readlines()
         records = [line.strip('\n').split(',') for line in body_lines]
-        records_list = []
-        for r in records:
-            r_d = dict(zip(header, r))
-            records_list.append(r_d)
-        return records_list
+        return [dict(zip(header, r)) for r in records]
 
 # unit test that checks that the dict reader produces a list of dicts
 class TestKatieDictReader(unittest.TestCase):
