@@ -21,17 +21,17 @@ class TestTransactionFileReader(unittest.TestCase):
         self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
 
 # opens and reads the file, reads the first line, formats the line, makes it the headers, returns the headers
-def read_csv_headers(filepath):
-    with open(filepath, 'r') as file:
-        header_line = file.readline()
-        header = header_line.strip('\n').split(',')
-        return header
+def read_csv_headers(file):
+    header_line = file.readline()
+    header = header_line.strip('\n').split(',')
+    return header
 
 # unit test for reading the headers, and that they are what we expect them to be
 class TestHeaderReader(unittest.TestCase):
     def test_header_is_read(self):
-        headers = read_csv_headers('../transactions.csv')
-        self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
+        with open('../transactions.csv', 'r') as file:
+            headers = read_csv_headers(file)
+            self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
 
     # open the file
     # read a line from the file, the first line is the headers
@@ -43,9 +43,8 @@ class TestHeaderReader(unittest.TestCase):
 # outputs list of dicts
 def make_list_of_dict_from_csvfile(filepath):
     with open(filepath, 'r') as file:
-        header_line  = file.readline()
+        header = read_csv_headers(file)
         body_lines = file.readlines()
-        header = header_line.strip('\n').split(',')
         records = [line.strip('\n').split(',') for line in body_lines]
         records_list = []
         for r in records:
