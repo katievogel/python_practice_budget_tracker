@@ -33,10 +33,6 @@ class TestHeaderReader(unittest.TestCase):
             headers = read_csv_headers(file)
             self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
 
-    # open the file
-    # read a line from the file, the first line is the headers
-    # return the headers as a list
-
 # opens and reads the file, gets the first line as the header, gets the rest of the lines as the data (body)
 # formats the header line, formats the data lines with list comp as a record, loops through each record
 # creates the dict for each record by zipping the header with a record and appends to record list
@@ -48,16 +44,15 @@ def make_list_of_dict_from_csvfile(filepath):
         records = [line.strip('\n').split(',') for line in body_lines]
         return [dict(zip(header, r)) for r in records]
 
-# unit test that checks that the dict reader produces a list of dicts
+# unit test that checks that the dict reader produces a list of dicts, check types, header equality, and date equality on one record
 class TestKatieDictReader(unittest.TestCase):
     def test_katies_dict_reader(self):
         dict_reader = make_list_of_dict_from_csvfile('../transactions.csv')
-        pass
+        self.assertTrue(type(dict_reader) == list)
+        self.assertTrue(type(dict_reader[0] == dict))
+        self.assertEqual(list(dict_reader[0].keys()), ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
+        self.assertEqual(dict_reader[0]['transaction_date'], '2022-08-24 00:00:00')
 
-
-# get the header line string
-# loop over the string, one char at a time
-# when we reach a comma, cut it there
 
 if __name__ == '__main__':
     unittest.main()
