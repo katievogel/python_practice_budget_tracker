@@ -62,8 +62,20 @@ class TestKatieDictReader(unittest.TestCase):
 class KatieCSVDictReaderClass(): pass
 
 class TestKatieCSVDictReader(unittest.TestCase):
-    def test_katie_csv_dict_reader_class(self):
-        pass
+    def setUp(self):
+        self.file = open('../transactions.csv', 'r')
+        self.reader = csv.KatieCSVDictReaderClass(self.file)
+    
+    def test_katie_csv_file_headers_read(self):
+        headers = self.reader.fieldnames
+        self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
+    
+    def test_katie_csv_file_records_read(self): 
+        records = list(self.reader)
+        self.assertTrue(len(records) > 0)
+
+    def tearDown(self):
+        self.file.close()
 
 
 
