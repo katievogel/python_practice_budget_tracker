@@ -9,15 +9,23 @@ class TestSomething(unittest.TestCase):
         self.assertEqual(5, 2+3)
 
 # you're always going to use DictReader and you don't need to wrap it in a function, so you can just test that reading the file works
+# setups and tearDowns are specific to unit tests. used in place of init. remember to use 'self' in front of your variables are they are used otherwise you will get NameErrors
 class TestTransactionFileReader(unittest.TestCase):
-    def test_csv_file_is_read(self):
-        with open('../transactions.csv', 'r') as file:
-            reader = csv.DictReader(file)
-            headers = reader.fieldnames
-            self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
-            records = list(reader)
-            self.assertTrue(len(records) > 0)
-            
+    def setUp(self):
+        self.file = open('../transactions.csv', 'r')
+        self.reader = csv.DictReader(self.file)
+    
+    def test_csv_file_headers_read(self):
+        headers = self.reader.fieldnames
+        self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
+    
+    def test_csv_file_records_read(self): 
+        records = list(self.reader)
+        self.assertTrue(len(records) > 0)
+
+    def tearDown(self):
+        self.file.close()
+        
 # opens and reads the file, reads the first line, formats the line, makes it the headers, returns the headers
 def read_csv_headers(file):
     header_line = file.readline()
