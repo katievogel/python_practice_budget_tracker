@@ -8,18 +8,16 @@ class TestSomething(unittest.TestCase):
     def test_dummy(self):
         self.assertEqual(5, 2+3)
 
-def read_transactions_file(filepath):
-    with open(filepath, 'r') as file:
-        reader = csv.DictReader(file)
-        headers = reader.fieldnames
-        return list(reader), headers
-
+# you're always going to use DictReader and you don't need to wrap it in a function, so you can just test that reading the file works
 class TestTransactionFileReader(unittest.TestCase):
     def test_csv_file_is_read(self):
-        records, headers = read_transactions_file('../transactions.csv')
-        self.assertTrue(len(records) > 0)
-        self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
-
+        with open('../transactions.csv', 'r') as file:
+            reader = csv.DictReader(file)
+            headers = reader.fieldnames
+            self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
+            records = list(reader)
+            self.assertTrue(len(records) > 0)
+            
 # opens and reads the file, reads the first line, formats the line, makes it the headers, returns the headers
 def read_csv_headers(file):
     header_line = file.readline()
@@ -52,6 +50,14 @@ class TestKatieDictReader(unittest.TestCase):
         self.assertTrue(type(dict_reader[0] == dict))
         self.assertEqual(list(dict_reader[0].keys()), ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
         self.assertEqual(dict_reader[0]['transaction_date'], '2022-08-24 00:00:00')
+
+class KatieCSVDictReaderClass(): pass
+
+class TestKatieCSVDictReader(unittest.TestCase):
+    def test_katie_csv_dict_reader_class(self):
+        pass
+
+
 
 
 if __name__ == '__main__':
