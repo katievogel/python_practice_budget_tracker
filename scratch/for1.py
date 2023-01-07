@@ -1,5 +1,6 @@
 import unittest
 import csv
+import time
 
 # use list comprehensions to implement a CSV parser, without using DictReader
 # with unit tests
@@ -54,13 +55,35 @@ def make_list_of_dict_from_csvfile(file):
 #when do you close the file?
 
 class KatieCSVDictReaderClass():
-
+    headers = None
     def __init__(self, file):
-        # self.csv_list_of_dicts = make_list_of_dicts_from_csvfile(file)
-        self.header = read_csv_headers(file)
-        self.body_lines = file.readlines()
+        self.file = file
+        # start = time.time()
+        # end = time.time()
+        # self.duration = end - start
+        # print(self.duration)
+
+    def read_headers(self):
+        start = time.time()
+        if not self.headers:
+            self.headers = read_csv_headers(self.file)
+        print(self.headers)
+        end = time.time()
+        self.duration = end - start
+        print(self.duration)
+        return self.headers
+
+    def read_records(self):
+        start = time.time()
+        self.headers = self.read_headers()
+        self.body_lines = self.file.readlines()
         self.records = [line.strip('\n').split(',') for line in self.body_lines]
-        self.l_of_d = [dict(zip(self.header, r)) for r in self.records]
+        self.l_of_d = [dict(zip(self.headers, r)) for r in self.records]
+        end = time.time()
+        self.duration = end - start
+        print(self.duration)
+
+
             
 
 
@@ -76,6 +99,10 @@ class TestKatieCSVDictReader(unittest.TestCase):
     def test_katie_csv_file_records_read(self): 
         records = self.reader.records
         self.assertTrue(len(records) > 0)
+
+    def test_katie_csv_file_transaction_date(self):
+        transaction_date = self.reader.l_of_d[0]['transaction_date']
+        self.assertEqual(transaction_date, '2022-08-24 00:00:00')
 
     def tearDown(self):
         self.file.close()
