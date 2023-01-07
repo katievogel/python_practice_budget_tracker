@@ -73,9 +73,9 @@ class TestKatieCSVDictReader(unittest.TestCase):
         headers = self.reader.header
         self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
     
-    # def test_katie_csv_file_records_read(self): 
-    #     records = list(self.reader)
-    #     self.assertTrue(len(records) > 0)
+    def test_katie_csv_file_records_read(self): 
+        records = self.reader.records
+        self.assertTrue(len(records) > 0)
 
     def tearDown(self):
         self.file.close()
