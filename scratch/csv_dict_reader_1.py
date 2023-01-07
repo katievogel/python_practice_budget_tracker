@@ -9,22 +9,6 @@ class TestKatieDictReader(unittest.TestCase):
         self.assertEqual(list(dict_reader[0].keys()), ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
         self.assertEqual(dict_reader[0]['transaction_date'], '2022-08-24 00:00:00')
 
-class TestKatieCSVDictReader(unittest.TestCase):
-    def setUp(self):
-        self.file = open('../transactions.csv', 'r')
-        self.reader = csv.KatieCSVDictReaderClass(self.file)
-    
-    def test_katie_csv_file_headers_read(self):
-        headers = self.reader.fieldnames
-        self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
-    
-    def test_katie_csv_file_records_read(self): 
-        records = list(self.reader)
-        self.assertTrue(len(records) > 0)
-
-    def tearDown(self):
-        self.file.close()
-
 # you're always going to use DictReader and you don't need to wrap it in a function, so you can just test that reading the file works
 # setups and tearDowns are specific to unit tests. used in place of init. remember to use 'self' in front of your variables are they are used otherwise you will get NameErrors
 class TestTransactionFileReader(unittest.TestCase):
@@ -65,3 +49,12 @@ def read_csv_headers(file):
     header_line = file.readline()
     header = header_line.strip('\n').split(',')
     return header
+
+#while this works, it is more work intensive and taks longer because you are doing everything when it initializes
+#breaking it apart into functions and only get what you need when you need it is better, despite more lines of code
+class KatieCSVDictReaderClass():
+    def __init__(self, file):
+        self.header = read_csv_headers(file)
+        self.body_lines = file.readlines()
+        self.records = [line.strip('\n').split(',') for line in self.body_lines]
+        self.l_of_d = [dict(zip(self.header, r)) for r in self.records]
