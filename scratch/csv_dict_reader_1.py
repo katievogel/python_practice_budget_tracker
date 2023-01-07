@@ -1,5 +1,6 @@
 #old versions for comparison
 
+# unit test that checks that the dict reader produces a list of dicts, check types, header equality, and date equality on one record
 class TestKatieDictReader(unittest.TestCase):
     def test_katies_dict_reader(self):
         dict_reader = make_list_of_dict_from_csvfile('../transactions.csv')
@@ -24,6 +25,8 @@ class TestKatieCSVDictReader(unittest.TestCase):
     def tearDown(self):
         self.file.close()
 
+# you're always going to use DictReader and you don't need to wrap it in a function, so you can just test that reading the file works
+# setups and tearDowns are specific to unit tests. used in place of init. remember to use 'self' in front of your variables are they are used otherwise you will get NameErrors
 class TestTransactionFileReader(unittest.TestCase):
     def setUp(self):
         self.file = open('../transactions.csv', 'r')
@@ -46,6 +49,10 @@ class TestHeaderReader(unittest.TestCase):
             headers = read_csv_headers(file)
             self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
 
+# opens and reads the file, gets the first line as the header, gets the rest of the lines as the data (body)
+# formats the header line, formats the data lines with list comp as a record, loops through each record
+# creates the dict for each record by zipping the header with a record and appends to record list
+# outputs list of dicts
 def make_list_of_dict_from_csvfile(filepath):
     with open(filepath, 'r') as file:
         header = read_csv_headers(file)
@@ -53,6 +60,7 @@ def make_list_of_dict_from_csvfile(filepath):
         records = [line.strip('\n').split(',') for line in body_lines]
         return [dict(zip(header, r)) for r in records]
 
+# opens and reads the file, reads the first line, formats the line, makes it the headers, returns the headers
 def read_csv_headers(file):
     header_line = file.readline()
     header = header_line.strip('\n').split(',')
