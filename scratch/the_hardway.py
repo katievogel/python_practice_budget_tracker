@@ -41,4 +41,37 @@ print(thing.tangerine)
 # thing.apple()
 # print(thing.tangerine)
 
+# 'is a' refers to what the data type is. 'is-a' refers to a subclass that inherits
+#Animal is a class and it is-a subclass of object. btw, no reason to pass 'object' into a class
+class Animal():
+    pass
 
+# class Dog is-a Animal
+class Dog(Animal):
+    def __init__(self, name):
+        # Dog has-a name
+        self.name = name
+
+# class Cat is-a Animal
+class Cat(Animal):
+    def __init__(self, name):
+        # Cat has-a name
+        self.name = name
+
+# class Person is a class
+class Person():
+    def __init__(self, name):
+        # Person has-name, and pet
+        self.name = name
+        self.pet = None
+
+
+class Employee(Person):
+    def __init__(self, name, salary):
+        ## Employee has-a name from Person
+        super(Employee, self).__init__(name) #bc name is initialized in Person, must call the init here to get the name
+        ## Employee has-a salary
+        self.salary = salary
+
+
+titan = Cat() #titan is an instance of Cat, and transitively and instance of Animal. An instance is an object
