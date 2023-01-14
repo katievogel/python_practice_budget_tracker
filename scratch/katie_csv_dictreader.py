@@ -6,8 +6,8 @@ def read_csv_headers(file):
     header_line = file.readline()
     header = header_line.strip('\n').split(',')
     return header
-    
-class KatieCSVDictReaderClass():
+
+class KatieCSVDictReader():
     headers = None
     l_of_d = None
     def __init__(self, file):
@@ -29,7 +29,7 @@ class KatieCSVDictReaderClass():
 class TestKatieCSVDictReader(unittest.TestCase):
     def setUp(self):
         self.file = open('../transactions.csv', 'r')
-        self.reader = KatieCSVDictReaderClass(self.file)
+        self.reader = KatieCSVDictReader(self.file)
     
     def test_katie_csv_file_headers_read(self):
         headers = self.reader.read_headers()
