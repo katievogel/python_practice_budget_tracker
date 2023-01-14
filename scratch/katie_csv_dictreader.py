@@ -8,18 +8,19 @@ def read_csv_headers(file):
     return header
 
 class KatieCSVDictReader():
-    headers = None
+    fieldnames_cache = None
     l_of_d = None
     def __init__(self, file):
         self.file = file
 
-    def read_headers(self):
-        if not self.headers:
-            self.headers = read_csv_headers(self.file)
-        return self.headers
+    @property
+    def fieldnames(self):
+        if not self.fieldnames_cache:
+            self.fieldnames_cache = read_csv_headers(self.file)
+        return self.fieldnames_cache
 
     def read_records(self):
-        self.headers = self.read_headers()
+        self.headers = self.fieldnames
         if not self.l_of_d:
             body_lines = self.file.readlines()
             records = [line.strip('\n').split(',') for line in body_lines]
@@ -32,7 +33,7 @@ class TestKatieCSVDictReader(unittest.TestCase):
         self.reader = KatieCSVDictReader(self.file)
     
     def test_katie_csv_file_headers_read(self):
-        headers = self.reader.read_headers()
+        headers = self.reader.fieldnames
         self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
     
     def test_katie_csv_file_records_read(self): 
