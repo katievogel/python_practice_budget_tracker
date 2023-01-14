@@ -1,3 +1,4 @@
+import csv
 #old versions for comparison
 
 # unit test that checks that the dict reader produces a list of dicts, check types, header equality, and date equality on one record
