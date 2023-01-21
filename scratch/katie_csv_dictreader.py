@@ -49,6 +49,10 @@ class TestKatieCSVDictReader(unittest.TestCase):
     def test_katie_csv_file_transaction_date(self):
         transaction_date = self.reader.read_records()[0]['transaction_date']
         self.assertEqual(transaction_date, '2022-08-24 00:00:00')
+    
+    def test_headers_not_empty_list(self):
+        headers = self.reader.fieldnames
+        self.assertNotEqual(headers, [])
 
     def tearDown(self):
         self.file.close()
