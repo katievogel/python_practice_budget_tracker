@@ -1,19 +1,65 @@
 
 
-class KatieIterable:
-    x = 0
-    def __iter__(self): 
-        return self
-    
+class ForwardRangeIterator():
+    def __init__(self, current, stop):
+        self.current = current
+        self.stop = stop
+
     def __next__(self): 
-        if self.x < 10:
-            self.x += 1
-            return self.x
+        if self.current < self.stop:
+            this = self.current
+            self.current += 1
+            return this
         else:
             raise StopIteration()
 
-    # def __getitem__(self, k): 
-    #     return k
+class BackwardsRangeIterator():
+    def __init__(self, current, stop=0):
+        self.current = current
+        self.stop = stop
+
+    def __next__(self):
+        if self.current > self.stop:
+            this = self.current
+            self.current -= 1
+            return this
+        else:
+            raise StopIteration
+
+class KRange:
+    def __init__(self, current, stop):
+        self.current = current
+        self.stop = stop
+    
+    def __iter__(self): return ForwardRangeIterator(self.current, self.stop)
+    def __reversed__(self): return BackwardsRangeIterator(self.current, self.stop)
+
+
+
+
+def dassert(a, b):
+    if a == b: print("pass")
+    else: print(f"fail: {a}")
+
+print("running tests")
+dassert([x for x in KRange(0, 3)], [0, 1, 2])
+dassert([x for x in reversed(KRange(0, 3))], [2, 1, 0])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def katie_list(iter):
     acc = []
