@@ -1,0 +1,12 @@
+transaction_date,item_name,item_category,unit_cost,total_units,total_cost
+2022-08-24 00:00:00,Lemons,expense,.50,10,5.0
+2022-08-24 00:00:00,Cups,expense,.10,100,10.0
+2022-08-24 00:00:00,Ice,expense,2.50,1,2.5
+2022-08-24 00:00:00,sugar,expense,3.00,1,3.0
+2022-08-24 00:00:00,Lemonade sold,income,3,1.50,4.5
+2022-08-24 00:00:00,Lemonade sole,income,1.50,20,30.0
+2022-08-24 00:00:00,milk,expense,10.00,0,0.0
+2022-09-22 00:00:00,ice,ex,1,10,10.0
+2022-10-03 00:00:00,ice,expense,.1,100,10.0
+2022-10-03 00:00:00,ice,expense,.1,100,10.0
+
