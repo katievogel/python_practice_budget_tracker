@@ -25,11 +25,6 @@ class TestKCSVDictReader(unittest.TestCase):
         self.file = open('./test_transactions3.csv', 'r')
         self.reader = KCSVDictReader(self.file)
 
-    def test_dummy(self):
-        a = 1
-        b = 2
-        self.assertEqual(a+b, 3)
-
     def test_reading_header_row(self):
         headers = self.reader.read_header_row()
         self.assertEqual(headers, ['transaction_date', 'item_name', 'item_category', 'unit_cost', 'total_units', 'total_cost'])
