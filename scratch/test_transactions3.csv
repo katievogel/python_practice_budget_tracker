@@ -9,4 +9,3 @@ transaction_date,item_name,item_category,unit_cost,total_units,total_cost
 2022-09-22 00:00:00,ice,ex,1,10,10.0
 2022-10-03 00:00:00,ice,expense,.1,100,10.0
 2022-10-03 00:00:00,ice,expense,.1,100,10.0
-
